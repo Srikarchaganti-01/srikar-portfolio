@@ -15,7 +15,7 @@ function SkillGroup({ group, activeKey, setActiveKey }) {
   const note = activeSkill ? usageText(getSkillUsage(activeSkill)) : "";
 
   return (
-    <div className="grid grid-cols-12 gap-y-3 border-t border-rule py-6 md:py-8 lg:gap-x-10">
+    <div className="grid grid-cols-12  border-t border-rule  md:py-2 lg:gap-x-10">
       <h3 className="meta col-span-12 text-ink-muted lg:col-span-3 lg:pt-3">
         {group.label}
       </h3>
@@ -27,7 +27,10 @@ function SkillGroup({ group, activeKey, setActiveKey }) {
             const key = `${group.id}:${item}`;
             const isActive = activeKey === key;
             return (
-              <li key={item} className="flex items-baseline gap-3">
+              <li
+                key={item}
+                className="flex items-baseline gap-3 text-gray-600"
+              >
                 {usage.length > 0 ? (
                   <button
                     type="button"
@@ -53,7 +56,7 @@ function SkillGroup({ group, activeKey, setActiveKey }) {
                     {/* A small dot marks skills that appear in the work above. */}
                     <span
                       aria-hidden="true"
-                      className="absolute -right-2 top-[0.35em] size-1.5 rounded-full bg-signal"
+                      className="absolute -right-2 top-[0.35em] size-1.5 rounded-full bg-orange-400"
                     />
                   </button>
                 ) : (

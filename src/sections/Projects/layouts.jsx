@@ -92,7 +92,7 @@ function Compact({ project }) {
         project={project}
         bleed={false}
         aspect="aspect-[4/5]"
-        className="col-span-12 sm:col-span-6 lg:col-span-4"
+        className="hidden sm:block sm:col-span-6 lg:col-span-4"
       />
       <div className="col-span-12 sm:col-span-6 lg:col-span-5 lg:col-start-6 lg:self-end">
         <ProjectNumeral number={project.number} />

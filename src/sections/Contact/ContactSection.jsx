@@ -90,8 +90,7 @@ export default function ContactSection() {
           </ul>
           <p className="mt-8 max-w-sm text-sm text-ink-muted">{contact.note}</p>
         </div>
-
-        <div className="col-span-12 lg:col-span-5 lg:col-start-8">
+        <div className="hidden md:block md:col-span-12 lg:col-span-5 lg:col-start-8">
           <ContactForm />
         </div>
       </div>

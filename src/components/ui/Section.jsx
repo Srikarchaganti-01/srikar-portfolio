@@ -19,11 +19,11 @@ export default function Section({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn("py-10 md:py-20", className)}
+      className={cn("py-5 md:py-10", className)}
     >
       <div className="container-page">
-        <MorseRule className="mb-10 md:mb-16" />
-        <header className="mb-12 grid grid-cols-12 gap-y-5 md:mb-20 lg:gap-x-10">
+        <MorseRule className="mb-6 md:mb-10" />
+        <header className="mb-6 grid grid-cols-12 gap-y-5 md:mb-10 lg:gap-x-10">
           <p className="meta col-span-12 text-ink-muted lg:col-span-3 lg:pt-4">
             <span className="text-signal-deep">{folio}</span> / {label}
           </p>
