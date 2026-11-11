@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens ("Signal")
+   ------------------------------------------------------------------ */
+@theme {
+  --color-paper: #f2ede2;
+  --color-ink: #17150f;
+  --color-ink-muted: #6e695e;
+  --color-rule: rgb(23 21 15 / 0.15);
+  --color-signal: #e0451f; /* large text, graphics, fills */
+  --color-signal-deep: #b8341a; /* small text (AA on paper) */
+
+  --font-display: "Instrument Serif", "Times New Roman", serif;
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-display-xl: clamp(4.5rem, 16vw, 14rem);
+  --text-display-xl--line-height: 0.88;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-lg: clamp(3rem, 8vw, 7rem);
+  --text-display-lg--line-height: 0.95;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-md: clamp(2.25rem, 5vw, 4rem);
+  --text-display-md--line-height: 1;
+  --text-display-md--letter-spacing: -0.015em;
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.5;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 90rem;
+  padding-inline: 1.25rem;
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 3rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    /* Paper grain: static SVG noise at ~3% alpha. Lower the final "0.06" in the
+       feColorMatrix to weaken it; delete this line to remove it. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal-deep);
+    outline-offset: 3px;
+  }
+
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    transition: top 0.2s;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Reusable pieces
+   ------------------------------------------------------------------ */
+@layer components {
+  /* Mono metadata: dates, tags, captions, folios. */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+
+  .hatch {
+    background-color: rgb(23 21 15 / 0.03);
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgb(23 21 15 / 0.09) 0 1px,
+      transparent 1px 10px
+    );
+  }
+
+  .dropcap::first-letter {
+    float: left;
+    font-family: var(--font-display);
+    font-size: 5.2em;
+    line-height: 0.8;
+    padding: 0.06em 0.1em 0 0;
+    color: var(--color-signal);
+  }
+
+  /* Morse trace revealed on hover (always visible on touch devices). */
+  .trace {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s var(--ease-editorial);
+  }
+  .group:hover .trace,
+  .group:focus-within .trace {
+    clip-path: inset(0 0 0 0);
+  }
+  @media (hover: none) {
+    .trace {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .pulse-dot {
+    animation: pulse-dot 2.4s ease-in-out infinite;
+  }
+  .scroll-dot {
+    animation: scroll-dot 2.2s var(--ease-editorial) infinite;
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(224 69 31 / 0.45); }
+  50% { box-shadow: 0 0 0 6px rgb(224 69 31 / 0); }
+}
+@keyframes scroll-dot {
+  0% { top: 0; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: calc(100% - 6px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pulse-dot,
+  .scroll-dot,
+  .animate-pulse { animation: none; }
+  .trace { transition: none; }
+}
